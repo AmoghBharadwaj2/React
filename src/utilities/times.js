@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { signInWithGoogle } from './firebase';
 
 export const hasConflict = (course, selected) => (
     selected.some(selection => courseConflict(course, selection))
@@ -53,14 +54,25 @@ export const TermButton = ({term, setTerm, checked}) => (
       </label>
     </>
 );
+
+const SignInButton = () => (
+    <button className="btn btn-secondary btn-sm"
+        onClick={() => signInWithGoogle()}>
+      Sign In
+    </button>
+);
   
 export const TermSelector = ({term, setTerm}) => (
-    <div className="btn-group">
-    { 
-      Object.values(terms).map(value => (
-        <TermButton key={value} term={value} setTerm={setTerm} checked={value === term} />
-      ))
-    }
+    <div className="btn-toolbar justify-content-between">
+      <div className="btn-group">
+      { 
+        Object.values(terms).map(
+          value => <TermButton key={value} term={value} setTerm={setTerm} checked={value === term} />
+        )
+      }
+      </div>
+      <button className="btn btn-secondary btn-sm">Sign In</button>
+      <SignInButton />
     </div>
 );
 
